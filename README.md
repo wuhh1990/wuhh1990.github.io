@@ -1,8 +1,46 @@
-#Hux Blog
+##目录
+<link rel="stylesheet" href="http://yandex.st/highlightjs/6.2/styles/googlecode.min.css">
+  
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+  
+<script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+ $(document).ready(function(){
+      $("h2,h3,h4,h5,h6").each(function(i,item){
+        var tag = $(item).get(0).localName;
+        $(item).attr("id","wow"+i);
+        $("#category").append('<a class="new'+tag+'" href="#wow'+i+'">'+$(this).text()+'</a></br>');
+        $(".newh2").css("margin-left",0);
+        $(".newh3").css("margin-left",20);
+        $(".newh4").css("margin-left",40);
+        $(".newh5").css("margin-left",60);
+        $(".newh6").css("margin-left",80);
+      });
+ });
+</script>
+<div id="category"></div>
 
-###[View Live Hux Blog &rarr;](http://huxpro.github.io)
 
-![](http://huangxuan.me/img/blog-desktop.jpg)
+##Liz Blog
+
+向右看起 &rarr;&rarr;
+
+* The Blog is clone from [Hux Github](https://github.com/Huxpro/huxpro.github.io) & [Hux Blog](http://huxpro.github.io)
+
+
+* Added some content and Replace some resources.
+
+* Build Github Page Blog:
+	 **[Reference Article A](http://www.jianshu.com/p/6aec3347b0ea)**
+		
+	 **[Reference Article B](http://www.jianshu.com/p/6aec3347b0ea)**
+<br>
+
+
+#####[Liz Blog &rarr;](http://liz123.cn)
+
+![](http://liz123.cn/img/blog-desktop.jpg)
 
 
 
@@ -294,3 +332,5 @@ So, the SEO Title is introduced to solve this problem, you can set `SEOTitle` di
 
 This theme is forked from [IronSummitMedia/startbootstrap-clean-blog-jekyll](https://github.com/IronSummitMedia/startbootstrap-clean-blog-jekyll)  
 Thanks Jekyll and Github Pages!
+
+
