@@ -13,9 +13,29 @@ tags:
 > I have to do it. I have no choice.
 > 我必须做到，我别无选择
 
+### 目录
+<link rel="stylesheet" href="http://yandex.st/highlightjs/6.2/styles/googlecode.min.css">
+  
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+  
+<script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+ $(document).ready(function(){
+      $("h2,h3,h4,h5,h6").each(function(i,item){
+        var tag = $(item).get(0).localName;
+        $(item).attr("id","wow"+i);
+        $("#category").append('<a class="new'+tag+'" href="#wow'+i+'">'+$(this).text()+'</a></br>');
+        $(".newh2").css("margin-left",0);
+        $(".newh3").css("margin-left",20);
+        $(".newh4").css("margin-left",40);
+        $(".newh5").css("margin-left",60);
+        $(".newh6").css("margin-left",80);
+      });
+ });
+</script>
+<div id="category"></div>
 
-## 目录
-[TOC]
 
 ### 常用命令
 
@@ -61,29 +81,30 @@ tags:
 
 ### 问题列表
 
-1. 这个网上很多种方法:(个人是移除cocoapods,重新安装的)
+* 这个网上很多种方法:(个人是移除cocoapods,重新安装的)
 
 ```
-	ERROR: While executing gem ... (Errno::EPERM) Operation not permitted - /usr/bin/pod
+ERROR: While executing gem ... (Errno::EPERM) 
+Operation not permitted - /usr/bin/pod
 ```
 
-2.ruby未更新:
+* ruby未更新:
 
 ```
-	ERROR:  While executing gem ... (Errno::EPERM)
-   Operation not permitted - /usr/bin/update_rubygems
+ERROR:  While executing gem ... (Errno::EPERM)
+Operation not permitted - /usr/bin/update_rubygems
 ```	
 
-3.[解决链接](http://www.jianshu.com/p/82a6d6c7b000)
+* [解决链接](http://www.jianshu.com/p/82a6d6c7b000)
 
 ```
-	from /usr/local/bin/pod:22:in `<main>'
+from /usr/local/bin/pod:22:in `<main>'
 ```	
 
-4.gem未更新：
+* gem未更新：
 
 ```
-	ERROR:  While executing gem ... (Errno::EPERM)
-   Operation not permitted - /usr/bin/xcodeproj
+ERROR:  While executing gem ... (Errno::EPERM) 
+Operation not permitted - /usr/bin/xcodeproj
 ```
 
