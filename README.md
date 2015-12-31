@@ -32,9 +32,12 @@
 * Added some content and Replace some resources.
 
 * Build Github Page Blog:
+
 	 **[Reference Article A](http://www.jianshu.com/p/6aec3347b0ea)**
 		
-	 **[Reference Article B](http://www.jianshu.com/p/6aec3347b0ea)**
+	 **[Reference Article B](http://www.jianshu.com/p/863f3f2d1733)**
+	 
+	 **[Reference Article B](https://www.zhihu.com/question/21169368)**
 <br>
 
 
