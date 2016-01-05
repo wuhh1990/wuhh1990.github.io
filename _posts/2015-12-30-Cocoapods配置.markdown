@@ -69,14 +69,31 @@ tags:
 		gem sources -a https://ruby.taobao.org/
 		gem sources -l
 		```
+	* 卸载Cocoapods: `sudo gem uninstall cocoapods`
+	* 安装Cocoapods指定版本: `sudo gem install cocoapods -v 0.38.1  `
 		
 6. pod install与pod update卡住. 可以使用如下命令替代
 	
 	```
 	pod install --verbose --no-repo-update
-	pod update --verbose --no-repo-update
-	```
 	
+	pod update --verbose --no-repo-update
+	
+	```
+7. 使用Cocoapods
+   
+   ```
+	 touch Podfile
+	
+	 open -e Podfile
+	
+	 pod install --verbose --no-repo-update
+   
+   target "工程名字" do
+     pod '库名', '~> 版本名'
+	 end
+   
+   ```		
 
 
 ### 问题列表
