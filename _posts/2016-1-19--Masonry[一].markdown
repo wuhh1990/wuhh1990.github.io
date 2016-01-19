@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Masonry[一]初级"
-date:       2015-12-30 13:43:00
+date:       2015-1-19 13:32:00
 author:     "Liz"
 header-img: "img/404-bg.jpg"
 tags:
@@ -12,20 +12,44 @@ tags:
 > I have to do it. I have no choice.
 > 我必须做到，我别无选择
 
-##Masonry[一]初级使用
-
 ```
 归纳总结下Masonry.
 ```
 
-######参考：
+### 目录
+<link rel="stylesheet" href="http://yandex.st/highlightjs/6.2/styles/googlecode.min.css">
+  
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+  
+<script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+ $(document).ready(function(){
+      $("h2,h3,h4,h5,h6").each(function(i,item){
+        var tag = $(item).get(0).localName;
+        $(item).attr("id","wow"+i);
+        $("#category").append('<a class="new'+tag+'" href="#wow'+i+'">'+$(this).text()+'</a></br>');
+        $(".newh2").css("margin-left",0);
+        $(".newh3").css("margin-left",20);
+        $(".newh4").css("margin-left",40);
+        $(".newh5").css("margin-left",60);
+        $(".newh6").css("margin-left",80);
+      });
+ });
+</script>
+<div id="category"></div>
+
+
+
+
+##参考
 - [Github Masonry](https://github.com/SnapKit/Masonry)
 - [MasonryDemo](https://github.com/CoderJackyHuang/MasonryDemo)&&[Blog](http://www.henishuo.com/category/autolayout/)
 
 - [DemoMasonryPlus](https://github.com/adad184/DemoMasonryPlus)
 
 
-##使用Masonry简单方法
+##Masonry简单布控
 
 - **控件**横向等间距布控一.(不知道为什么，UIView 不能显示)
 
@@ -89,14 +113,13 @@ tags:
 
 ```
 
+
 - 动画**更新**约束
 
-
-
-1.初始Fun>>
-
-```
-self.scacle = 1.0;
+	1. 初始Fun>>
+		
+		```
+  self.scacle = 1.0;
   [btn mas_updateConstraints:^(MASConstraintMaker *make) {
     make.center.mas_equalTo(self.view);
     // 初始宽、高为100，**优先级最低**
@@ -104,26 +127,29 @@ self.scacle = 1.0;
     // 最大放大到整个view
     make.width.height.lessThanOrEqualTo(self.view);
   }];
-```
-2.更新Fun>>
+  
+		```
+		
+	2. 更新Fun>>
 	
-```
-  self.scacle += 0.2;
+		```
+		self.scacle += 0.2;
   // 告诉self.view约束需要更新
   [self.view setNeedsUpdateConstraints];
   // 调用此方法告诉self.view检测是否需要更新约束，若需要则更新，下面添加动画效果才起作用
   [self.view updateConstraintsIfNeeded];
-  
+  //
   [UIView animateWithDuration:0.3 animations:^{
     [self.view layoutIfNeeded];
   }];
-```
-3.调用**updateViewConstraints**>>
+		```
 
-```
-- (void)updateViewConstraints {
+	3. 调用**updateViewConstraints**>>
+
+		```
+		- (void)updateViewConstraints {
   [btn mas_updateConstraints:^(MASConstraintMaker *make) {
-  
+    //
     make.center.mas_equalTo(self.view);
     // 初始宽、高为100，优先级最低
     make.width.height.mas_equalTo(100 * self.scacle).priorityLow();
@@ -132,7 +158,7 @@ self.scacle = 1.0;
   }];
   [super updateViewConstraints];
 }
-```
+		```
 
 - 删除约束，重新添加新的约束
   ^(苹果推荐在updateViewConstraints方法中更新或者添加约束)
