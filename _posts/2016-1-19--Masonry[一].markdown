@@ -42,14 +42,14 @@ tags:
 
 
 
-##参考
+###参考
 - [Github Masonry](https://github.com/SnapKit/Masonry)
 - [MasonryDemo](https://github.com/CoderJackyHuang/MasonryDemo)&&[Blog](http://www.henishuo.com/category/autolayout/)
 
 - [DemoMasonryPlus](https://github.com/adad184/DemoMasonryPlus)
 
 
-##Masonry简单布控
+###Masonry简单布控
 
 - **控件**横向等间距布控一.(不知道为什么，UIView 不能显示)
 
@@ -119,7 +119,7 @@ tags:
 	1. 初始Fun>>
 		
 		```
-  self.scacle = 1.0;
+	self.scacle = 1.0;
   [btn mas_updateConstraints:^(MASConstraintMaker *make) {
     make.center.mas_equalTo(self.view);
     // 初始宽、高为100，**优先级最低**
@@ -127,7 +127,6 @@ tags:
     // 最大放大到整个view
     make.width.height.lessThanOrEqualTo(self.view);
   }];
-  
 		```
 		
 	2. 更新Fun>>
