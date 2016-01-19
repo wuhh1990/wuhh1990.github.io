@@ -16,6 +16,7 @@ tags:
 归纳总结下Masonry.
 ```
 
+
 ### 目录
 <link rel="stylesheet" href="http://yandex.st/highlightjs/6.2/styles/googlecode.min.css">
   
@@ -41,15 +42,14 @@ tags:
 
 
 
-
-###参考
+### 参考
 - [Github Masonry](https://github.com/SnapKit/Masonry)
 - [MasonryDemo](https://github.com/CoderJackyHuang/MasonryDemo)&&[Blog](http://www.henishuo.com/category/autolayout/)
 
 - [DemoMasonryPlus](https://github.com/adad184/DemoMasonryPlus)
 
 
-###Masonry简单布控
+### Masonry简单布控
 
 - **控件**横向等间距布控一.(不知道为什么，UIView 不能显示)
 
@@ -118,7 +118,8 @@ tags:
 
 	1. 初始Fun>>
 		
-		```
+	```	
+		
 	self.scacle = 1.0;
   [btn mas_updateConstraints:^(MASConstraintMaker *make) {
     make.center.mas_equalTo(self.view);
@@ -127,28 +128,32 @@ tags:
     // 最大放大到整个view
     make.width.height.lessThanOrEqualTo(self.view);
   }];
-		```
+  
+	```
 		
 	2. 更新Fun>>
 	
-		```
-		self.scacle += 0.2;
+	```
+	
+	self.scacle += 0.2;
   // 告诉self.view约束需要更新
   [self.view setNeedsUpdateConstraints];
   // 调用此方法告诉self.view检测是否需要更新约束，若需要则更新，下面添加动画效果才起作用
   [self.view updateConstraintsIfNeeded];
-  //
+  
   [UIView animateWithDuration:0.3 animations:^{
     [self.view layoutIfNeeded];
   }];
-		```
+  
+	```
 
 	3. 调用**updateViewConstraints**>>
 
-		```
-		- (void)updateViewConstraints {
+	```
+	
+	- (void)updateViewConstraints {
   [btn mas_updateConstraints:^(MASConstraintMaker *make) {
-    //
+    
     make.center.mas_equalTo(self.view);
     // 初始宽、高为100，优先级最低
     make.width.height.mas_equalTo(100 * self.scacle).priorityLow();
@@ -156,8 +161,9 @@ tags:
     make.width.height.lessThanOrEqualTo(self.view);
   }];
   [super updateViewConstraints];
-}
-		```
+}	
+
+	```
 
 - 删除约束，重新添加新的约束
   ^(苹果推荐在updateViewConstraints方法中更新或者添加约束)
