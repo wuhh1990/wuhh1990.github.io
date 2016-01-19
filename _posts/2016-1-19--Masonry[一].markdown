@@ -1,0 +1,207 @@
+---
+layout:     post
+title:      "Masonry[一]初级"
+date:       2015-12-30 13:43:00
+author:     "Liz"
+header-img: "img/404-bg.jpg"
+tags:
+    - iOS
+    - Masonry
+---
+
+> I have to do it. I have no choice.
+> 我必须做到，我别无选择
+
+##Masonry[一]初级使用
+
+```
+归纳总结下Masonry.
+```
+
+######参考：
+- [Github Masonry](https://github.com/SnapKit/Masonry)
+- [MasonryDemo](https://github.com/CoderJackyHuang/MasonryDemo)&&[Blog](http://www.henishuo.com/category/autolayout/)
+
+- [DemoMasonryPlus](https://github.com/adad184/DemoMasonryPlus)
+
+
+##使用Masonry简单方法
+
+- **控件**横向等间距布控一.(不知道为什么，UIView 不能显示)
+
+```
+
+[@[btn1, btn2, btn3] mas_distributeViewsAlongAxis:MASAxisTypeHorizontal
+              						 withFixedItemLength:80
+                                      leadSpacing:15
+                                      tailSpacing:15]; 
+
+[@[btn1, btn2, btn3] mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.mas_equalTo(200);
+}]; 
+  
+```
+
+- **控件**横向等间距布控二.
+
+```
+/**
+ *  将若干view等宽布局于容器containerView中
+ *
+ *  @param views         viewArray
+ *  @param containerView 容器view
+ *  @param LRpadding     距容器的左右边距
+ *  @param viewPadding   各view的左右边距
+ */
+-(void)makeEqualWidthViews:(NSArray *)views
+                    inView:(UIView *)containerView
+                 LRpadding:(CGFloat)LRpadding
+               viewPadding:(CGFloat)viewPadding
+{
+    UIView *lastView;
+    for (UIView *view in views) {
+        [containerView addSubview:view];
+        if (lastView) {
+            [view mas_makeConstraints:^(MASConstraintMaker *make) {
+                //make.top.bottom.equalTo(containerView);
+                make.left.equalTo(lastView.mas_right).offset(viewPadding);
+                make.width.equalTo(lastView);
+            }];
+        }else
+        {
+            [view mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(containerView).offset(LRpadding);
+                //make.top.bottom.equalTo(containerView);
+            }];
+        }
+        lastView=view;
+    }
+    [lastView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(containerView).offset(-LRpadding);
+    }];
+    
+    //定义高
+    [views mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@60);
+        make.bottom.equalTo(@(-60));
+    }];
+}
+
+```
+
+- 动画**更新**约束
+
+
+
+1.初始Fun>>
+
+```
+self.scacle = 1.0;
+  [btn mas_updateConstraints:^(MASConstraintMaker *make) {
+    make.center.mas_equalTo(self.view);
+    // 初始宽、高为100，**优先级最低**
+    make.width.height.mas_equalTo(100 * self.scacle).priorityLow();
+    // 最大放大到整个view
+    make.width.height.lessThanOrEqualTo(self.view);
+  }];
+```
+2.更新Fun>>
+	
+```
+  self.scacle += 0.2;
+  // 告诉self.view约束需要更新
+  [self.view setNeedsUpdateConstraints];
+  // 调用此方法告诉self.view检测是否需要更新约束，若需要则更新，下面添加动画效果才起作用
+  [self.view updateConstraintsIfNeeded];
+  
+  [UIView animateWithDuration:0.3 animations:^{
+    [self.view layoutIfNeeded];
+  }];
+```
+3.调用**updateViewConstraints**>>
+
+```
+- (void)updateViewConstraints {
+  [btn mas_updateConstraints:^(MASConstraintMaker *make) {
+  
+    make.center.mas_equalTo(self.view);
+    // 初始宽、高为100，优先级最低
+    make.width.height.mas_equalTo(100 * self.scacle).priorityLow();
+    // 最大放大到整个view
+    make.width.height.lessThanOrEqualTo(self.view);
+  }];
+  [super updateViewConstraints];
+}
+```
+
+- 删除约束，重新添加新的约束
+  ^(苹果推荐在updateViewConstraints方法中更新或者添加约束)
+  
+```
+- (void)updateViewConstraints {
+  // remake会将之前的全部移除，然后重新添加
+  __weak __typeof(self) weakSelf = self;
+  [btn mas_remakeConstraints:^(MASConstraintMaker *make) {
+		...
+  }];
+  [super updateViewConstraints];
+}
+```
+
+***
+
+- **非** 调用updateViewConstraints的方法
+
+```
+	
+- (void)updateWithExpand:(BOOL)isExpanded animated:(BOOL)animated {
+ 
+  [self.purpleView mas_updateConstraints:^(MASConstraintMaker *make) {
+      make.left.top.mas_equalTo(20);
+      make.right.mas_equalTo(-20);
+      if (isExpanded) {
+          make.bottom.mas_equalTo(-20);
+      } else {
+          make.bottom.mas_equalTo(-300);
+      }
+  }];
+    
+  [self.orangeView mas_updateConstraints:^(MASConstraintMaker *make) {
+      make.center.mas_equalTo(self.purpleView);
+      // 这里使用优先级处理
+      // 设置其最大值为250，最小值为90
+      if (!isExpanded) {
+          make.width.height.mas_equalTo(100 * 0.5).priorityLow();
+      } else {
+          make.width.height.mas_equalTo(100 * 3).priorityLow();
+      }
+      
+      // 最大值为250
+      make.width.height.lessThanOrEqualTo(@250);
+      // 最小值为90
+      make.width.height.greaterThanOrEqualTo(@90);
+  }];
+  
+  if (animated) {
+      [self.view setNeedsUpdateConstraints];
+      [self.view updateConstraintsIfNeeded];
+      
+      [UIView animateWithDuration:0.5 animations:^{
+          [self.view layoutIfNeeded];
+      }];
+  }
+}
+```
+
+
+>边缘
+> make.edges.equalTo(lastView).insets(UIEdgeInsetsMake(20, 20, 20, 20));
+
+>设置优先级
+> make.width.height.mas_equalTo(topView).**priorityLow()**;
+
+>设置比例
+>make.width.mas_equalTo(topInnerView.mas_height).**multipliedBy(3)**;
+
+
+

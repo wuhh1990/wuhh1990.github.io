@@ -12,8 +12,13 @@ tags:
 > I have to do it. I have no choice.
 > 我必须做到，我别无选择
 
-
 ## 前言
+> Masonry 总结归纳. 编写Masonry封装分类库.
+> 关于快速自定义导航栏，准备集成Table的刷新等等的功能，的BaseVC.
+> 各种快速跳转iPhone设置的Demo.
+> 各种快速iPhone功能授权的Demo.
+> AFNetworking 3.0 网络库封装.包括缓存与接口拼接，cookie方案等.
+> 蓝牙库 改用BabyBlue框架 重写蓝牙部分
 
 ## 正文
 
